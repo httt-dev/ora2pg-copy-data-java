@@ -72,6 +72,25 @@ public class MetadataUtil {
         }
     }
 
+    public static List<String> getPrimaryKeyColumns(Connection conn, String table) throws SQLException {
+        String sql = "SELECT cols.column_name " +
+                     "FROM all_constraints cons " +
+                     "JOIN all_cons_columns cols ON cons.constraint_name = cols.constraint_name " +
+                     "WHERE cons.table_name = ? " +
+                     "AND cons.constraint_type = 'P' " +
+                     "ORDER BY cols.position"; // Sắp xếp theo thứ tự cột trong khóa
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, table.toUpperCase());
+            ResultSet rs = pstmt.executeQuery();
+            List<String> pkColumns = new ArrayList<>();
+            while (rs.next()) {
+                pkColumns.add(rs.getString("column_name").toLowerCase());
+            }
+            return pkColumns;
+        }
+    }
+
     /**
      * Lấy danh sách tất cả cột của table
      */

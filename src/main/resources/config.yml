@@ -1,11 +1,11 @@
 source:
-  url: jdbc:oracle:thin:@//192.168.147.131:1521/WECOMMIT
+  url: jdbc:oracle:thin:@//192.168.147.134:1521/XXX
   username: stackoverflow2013
-  password: Wecommit100x
+  password: XXX
 target:
   url: jdbc:postgresql://192.168.147.130:5432/bo_dev_test_en_utf8
   username: postgres
   password: Abc12345
 tables:
-  - badges
+  - posts
 workers: 4
